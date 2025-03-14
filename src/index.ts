@@ -37,8 +37,11 @@ async function processAndScore(): Promise<Map<string, ScoredJob[]>> {
 async function main() {
     try {
         const memberJobScores = await processAndScore();
-        console.log(JSON.stringify([...memberJobScores], null, 2));
-        // console.log(memberJobScores);
+        memberJobScores.forEach((jobs, memberName) => {
+            console.log(`${memberName}: ${jobs.map(job => 
+                `${job.jobName.title} (${job.jobName.location})`)
+                .join(', ')}`);
+        })
     } catch (error) {
         console.error('An error occurred:', error);
         process.exit(1)
